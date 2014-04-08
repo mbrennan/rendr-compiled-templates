@@ -1,10 +1,10 @@
 {
   "name": "rendr-dot",
-  "version": "0.1.0",
+  "version": "0.0.1",
   "description": "doT template adapter for Rendr apps",
   "main": "index.js",
   "scripts": {
-    "test": "mocha test/*.test.js test/**/*.test.js"
+    "test": "jasmine-node --coffee --color spec/"
   },
   "repository": {
     "type": "git",
@@ -20,5 +20,11 @@
   "bugs": {
     "url": "https://github.com/mbrennan/rendr-dot/issues"
   },
-  "homepage": "https://github.com/mbrennan/rendr-dot"
+  "homepage": "https://github.com/mbrennan/rendr-dot",
+  "devDependencies": {
+    "jasmine-node": "^1.14.3",
+    "grunt-cli": "^0.1.13",
+    "grunt": "^0.4.4",
+    "grunt-contrib-coffee": "^0.10.1"
+  }
 }
