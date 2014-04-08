@@ -9,9 +9,7 @@ module.exports = (options) ->
 
     layoutFilePath = path.join(directory, filename)
 
-    console.log("about to call fs.exists (#{layoutFilePath})...")
     fileSystem.exists layoutFilePath, (exists) ->
-      console.log('inside fs.exists, calling callback...')
       finished("Unable to load layout, '#{layoutFilePath}' does not exist.") if not exists
 
       z = ->
