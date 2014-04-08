@@ -1,9 +1,6 @@
-module.exports = ->
-  {
-    getTemplate: ->
-      ->
+module.exports = (options) ->
+  options ?= {}
+  options.isServer ?= ->
+    not window?
 
-    getLayout: (x, y, done) ->
-      z = ->
-      done(null, z)
-  }
+  require('./rendr-dot')(options)
