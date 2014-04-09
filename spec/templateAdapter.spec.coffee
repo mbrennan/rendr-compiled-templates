@@ -1,6 +1,6 @@
 describe 'rendr template adapter', ->
   beforeEach ->
-    this.templateAdapter = require('../src/index')()
+    this.templateAdapter = require('./config').templateAdapter()
 
   describe 'interface', ->
     describe 'getTemplate', ->
@@ -12,10 +12,14 @@ describe 'rendr template adapter', ->
       describe 'when supplied with valid parameters', ->
         it 'invokes a callback with a function', (done) ->
           path = require 'path'
-          this.templateAdapter.getLayout 'layout', path.join('spec', 'mock_app'), (error, template) ->
-            expect(error).toBeFalsy()
-            expect(typeof template).toBe('function')
-            done()
+          this.templateAdapter.getLayout(
+            'identity',
+            path.join('spec', 'templateAdapter'),
+            (error, template) ->
+              expect(error).toBeFalsy()
+              expect(typeof template).toBe('function')
+              done()
+          )
 
       describe 'when completed with an error', ->
         it 'invokes a callback with an error', (done) ->
@@ -26,7 +30,7 @@ describe 'rendr template adapter', ->
 
       describe 'when running on client', ->
         it 'should error', ->
-          this.templateAdapter = require('../src/index')(
+          this.templateAdapter = require('./config').templateAdapter(
             isServer: false
           )
           context = this

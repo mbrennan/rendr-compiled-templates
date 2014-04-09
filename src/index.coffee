@@ -1,9 +1,27 @@
 module.exports = (options) ->
   path = require 'path'
+  fileSystem = require 'fs'
 
   options ?= {}
   options.isServer ?= not window?
-  options.layoutPath ?= path.join('app', 'templates')
   options.fileExtension ?= '.dot'
+  options.basePath ?= __dirname
+  options.templatePath ?= path.join 'app', 'templates'
 
-  require('./rendr-dot')(options)
+  dot = require('dot').process path: path.join(options.basePath, options.templatePath)
+
+  getTemplate: ->
+    ->
+  getLayout: (template, baseDirectory, finished) ->
+    throw new Error('getLayout is only available on the server.') if not options.isServer
+
+    return finished(null, dot[template]) if template of dot
+
+    layoutFilePath = path.join(baseDirectory, options.templatePath, template + options.fileExtension)
+
+    fileSystem.exists layoutFilePath, (exists) ->
+      finished("Unable to load layout, '#{layoutFilePath}' does not exist.") if not exists
+
+      z = ->
+
+      finished(null, z)

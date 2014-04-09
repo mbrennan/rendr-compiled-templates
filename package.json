@@ -26,5 +26,8 @@
     "grunt-cli": "^0.1.13",
     "grunt": "^0.4.4",
     "grunt-contrib-coffee": "^0.10.1"
+  },
+  "dependencies": {
+    "dot": "^1.0.2"
   }
 }
