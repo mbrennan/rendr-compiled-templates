@@ -4,7 +4,7 @@
   "description": "doT template adapter for Rendr apps",
   "main": "index.js",
   "scripts": {
-    "test": "jasmine-node --coffee spec/"
+    "test": "mocha --compilers coffee:coffee-script/register src/test/"
   },
   "repository": {
     "type": "git",
@@ -22,10 +22,12 @@
   },
   "homepage": "https://github.com/mbrennan/rendr-dot",
   "devDependencies": {
-    "jasmine-node": "^2.0.0",
     "grunt-cli": "^0.1.13",
     "grunt": "^0.4.4",
-    "grunt-contrib-coffee": "^0.10.1"
+    "grunt-contrib-coffee": "^0.10.1",
+    "mocha": "^1.18.2",
+    "coffee-script": "^1.7.1",
+    "should": "^3.3.0"
   },
   "dependencies": {
     "dot": "^1.0.2"
