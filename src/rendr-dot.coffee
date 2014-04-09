@@ -4,10 +4,10 @@ module.exports = (options) ->
 
   getTemplate: ->
     ->
-  getLayout: (filename, directory, finished) ->
-    throw new Error('getLayout is only available on the server.') if not options.isServer()
+  getLayout: (filename, baseDirectory, finished) ->
+    throw new Error('getLayout is only available on the server.') if not options.isServer
 
-    layoutFilePath = path.join(directory, filename)
+    layoutFilePath = path.join(baseDirectory, options.layoutPath, filename + options.fileExtension)
 
     fileSystem.exists layoutFilePath, (exists) ->
       finished("Unable to load layout, '#{layoutFilePath}' does not exist.") if not exists

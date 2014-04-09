@@ -1,7 +1,6 @@
 describe 'rendr template adapter', ->
-  beforeEach (done) ->
+  beforeEach ->
     this.templateAdapter = require('../src/index')()
-    done()
 
   describe 'interface', ->
     describe 'getTemplate', ->
@@ -12,25 +11,23 @@ describe 'rendr template adapter', ->
     describe 'method getLayout', ->
       describe 'when supplied with valid parameters', ->
         it 'invokes a callback with a function', (done) ->
-          # As of rendr 0.5.0, the layout file name must be '__layout'
-          # and the path to the file must be 'app/templates'
-          this.templateAdapter.getLayout '__layout', 'app/templates', (error, template) ->
-            expect(error).toBeNull()
-            expect(template).toBe('function')
+          path = require 'path'
+          this.templateAdapter.getLayout 'layout', path.join('spec', 'mock_app'), (error, template) ->
+            expect(error).toBeFalsy()
+            expect(typeof template).toBe('function')
             done()
 
       describe 'when completed with an error', ->
         it 'invokes a callback with an error', (done) ->
           this.templateAdapter.getLayout 'a_bad_file_name.bad', 'a/bad/path', (error, template) ->
-            expect(error).not.toBeNull()
-            expect(template).toBeNull()
+            expect(error).not.toBeFalsy()
+            expect(template).toBeFalsy()
             done()
 
       describe 'when running on client', ->
         it 'should error', ->
           this.templateAdapter = require('../src/index')(
-            isServer: ->
-              false
+            isServer: false
           )
           context = this
           getLayoutCall = ->
