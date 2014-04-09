@@ -13,7 +13,7 @@ describe 'rendr template adapter', ->
         it 'invokes a callback with a function', (done) ->
           path = require 'path'
           this.templateAdapter.getLayout(
-            'identity',
+            'preCompiledIdentity',
             path.join('spec', 'templateAdapter'),
             (error, template) ->
               expect(error).toBeFalsy()

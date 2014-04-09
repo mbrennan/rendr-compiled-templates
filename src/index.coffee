@@ -20,8 +20,13 @@ module.exports = (options) ->
     layoutFilePath = path.join(baseDirectory, options.templatePath, template + options.fileExtension)
 
     fileSystem.exists layoutFilePath, (exists) ->
-      finished("Unable to load layout, '#{layoutFilePath}' does not exist.") if not exists
+      finished("Unable to load layout, #{layoutFilePath} does not exist.") if not exists
 
-      z = ->
+      fileSystem.readFile layoutFilePath, 'utf8', (error, templateSource) ->
+        console.log('read file complete')
+        finished("Unable to read file #{layoutFilePath}: #{error}") if error
 
-      finished(null, z)
+        console.log('compiling template')
+        template = dot.template(templateSource)
+        console.log('about to call callback')
+        finished(null, template)

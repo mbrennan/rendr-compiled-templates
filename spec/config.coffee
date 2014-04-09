@@ -1,6 +1,6 @@
 rendrDot = (options) ->
     options ?= {}
-    options.basePath ?= 'spec'
+    options.basePath ?= 'spec/preCompiled'
     options.templatePath ?= 'templates'
 
     require('../src')(options)
