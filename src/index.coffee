@@ -5,7 +5,7 @@ module.exports = (options) ->
   options ?= {}
   options.isServer ?= not window?
   options.fileExtension ?= '.dot'
-  options.basePath ?= __dirname
+  options.basePath ?= process.cwd()
   options.templatePath ?= path.join 'app', 'templates'
 
   dot = require('dot')
