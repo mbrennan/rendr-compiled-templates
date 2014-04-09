@@ -14,12 +14,11 @@ module.exports = (options) ->
 
   getTemplate: ->
     ->
-  getLayout: (template, baseDirectory, finished) ->
+  getLayout: (templateName, baseDirectory, finished) ->
     throw new Error('getLayout is only available on the server.') if not options.isServer
+    return finished(null, preCompiledTemplates[templateName]) if templateName of preCompiledTemplates
 
-    return finished(null, preCompiledTemplates[template]) if template of preCompiledTemplates
-
-    layoutFilePath = path.join(baseDirectory, options.templatePath, template + options.fileExtension)
+    layoutFilePath = path.join(baseDirectory, options.templatePath, templateName + options.fileExtension)
 
     fileSystem.exists layoutFilePath, (exists) ->
       return finished("Unable to load layout, #{layoutFilePath} does not exist.") if not exists
@@ -28,4 +27,5 @@ module.exports = (options) ->
         return finished("Unable to read file #{layoutFilePath}: #{error}") if error
 
         template = dot.compile(templateSource)
+        preCompiledTemplates[templateName] = template
         finished(null, template)
