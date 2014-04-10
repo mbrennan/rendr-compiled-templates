@@ -2,7 +2,7 @@
   "name": "rendr-dot",
   "version": "0.0.1",
   "description": "doT template adapter for Rendr apps",
-  "main": "index.js",
+  "main": "index.coffee",
   "scripts": {
     "test": "mocha --compilers coffee:coffee-script/register src/test/"
   },

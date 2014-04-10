@@ -12,7 +12,7 @@ module.exports = (options) ->
   templatePath = path.join options.basePath, options.templatePath
   preCompiledTemplates = dot.process path: templatePath
 
-  getTemplate: ->
+  getTemplate: (name) ->
     ->
   getLayout: (templateName, baseDirectory, finished) ->
     throw new Error('getLayout is only available on the server.') if not options.isServer
