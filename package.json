@@ -2,9 +2,9 @@
   "name": "rendr-dot",
   "version": "0.0.1",
   "description": "doT template adapter for Rendr apps",
-  "main": "index.coffee",
+  "main": "lib/rendr-dot.coffee",
   "scripts": {
-    "test": "mocha --compilers coffee:coffee-script/register src/test/"
+    "test": "mocha --compilers coffee:coffee-script/register test/"
   },
   "repository": {
     "type": "git",
@@ -27,7 +27,8 @@
     "grunt-contrib-coffee": "^0.10.1",
     "mocha": "^1.18.2",
     "coffee-script": "^1.7.1",
-    "should": "^3.3.0"
+    "should": "^3.3.0",
+    "sinon": "^1.9.1"
   },
   "dependencies": {
     "dot": "^1.0.2"

@@ -1,40 +1,46 @@
-should = require 'should'
+should  = require 'should'
+sinon   = require 'sinon'
 
 describe 'rendr-dot template adapter', ->
   beforeEach ->
-    this.rendrDot = require('./config').rendrDot()
-    this.identityValue = 'layout template'
-    this.identity = identity: this.identityValue
+    dot = require('dot')
+    @dotProcess = sinon.spy(dot, 'process')
+    @rendrDot = require('./config').rendrDot(dot: dot)
+    @identityValue = 'layout template'
+    @identity = identity: @identityValue
+
+  afterEach ->
+    @dotProcess.restore()
+
+  it 'should only pre-compile templates once', ->
+    @dotProcess.callCount.should.be.exactly(1)
 
   describe 'method getLayout', ->
     describe 'when passed a pre-compiled template name', ->
       it 'should return a compiled doT template', (done) ->
-        context = this
-        this.rendrDot.getLayout 'preCompiledIdentity', null, (error, template) ->
+        @rendrDot.getLayout 'preCompiledIdentity', null, (error, template) =>
           should.not.exist error
-          template(context.identity).should.be.exactly context.identityValue
+          template(@identity).should.be.exactly @identityValue
           done()
 
     describe 'when passed a runtime identity template name', ->
       it 'should return a compiled template using the base directory', (done) ->
-        context = this
         path = require 'path'
         basePath = path.join __dirname, 'runtime'
-        this.rendrDot.getLayout 'runtimeIdentity', basePath, (error, template) ->
+        @rendrDot.getLayout 'runtimeIdentity', basePath, (error, template) =>
           should.not.exist error
-          template(context.identity).should.be.exactly context.identityValue
+          template(@identity).should.be.exactly @identityValue
           done()
 
       it 'should add the runtime identity to the list of pre-compiled templates', (done) ->
-        context = this
         path = require 'path'
         basePath = path.join __dirname, 'runtime'
-        this.rendrDot.getLayout 'runtimeIdentity', basePath, (error, firstTemplate) ->
+        @rendrDot.getLayout 'runtimeIdentity', basePath, (error, firstTemplate) =>
           should.not.exist error
           firstTemplate.should.exist
 
-          context.rendrDot.getLayout 'runtimeIdentity', null, (error, secondTemplate) ->
+          @rendrDot.getLayout 'runtimeIdentity', null, (error, secondTemplate) =>
             should.not.exist error
-            firstTemplate(context.identity).should.be.exactly(secondTemplate(context.identity))
+            firstTemplate(@identity).should.be.exactly(secondTemplate(@identity))
             done()
 

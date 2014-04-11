@@ -1,3 +1,6 @@
+templates = {}
+hasCompiledTemplates = false
+
 module.exports = (options) ->
   path = require 'path'
   fileSystem = require 'fs'
@@ -7,16 +10,22 @@ module.exports = (options) ->
   options.fileExtension ?= '.dot'
   options.basePath ?= process.cwd()
   options.templatePath ?= path.join 'app', 'templates'
+  options.dot ?= require 'dot'
 
-  dot = require('dot')
   templatePath = path.join options.basePath, options.templatePath
-  preCompiledTemplates = dot.process path: templatePath
+
+  compileTemplates = ->
+    templates = options.dot.process path: templatePath
+    hasCompiledTemplates = true
+
+  compileTemplates() if not hasCompiledTemplates
 
   getTemplate: (name) ->
+    console.log "Getting template #{name}"
     ->
   getLayout: (templateName, baseDirectory, finished) ->
     throw new Error('getLayout is only available on the server.') if not options.isServer
-    return finished(null, preCompiledTemplates[templateName]) if templateName of preCompiledTemplates
+    return finished(null, templates[templateName]) if templateName of templates
 
     layoutFilePath = path.join(baseDirectory, options.templatePath, templateName + options.fileExtension)
 
@@ -26,6 +35,6 @@ module.exports = (options) ->
       fileSystem.readFile layoutFilePath, 'utf8', (error, templateSource) ->
         return finished("Unable to read file #{layoutFilePath}: #{error}") if error
 
-        template = dot.compile(templateSource)
-        preCompiledTemplates[templateName] = template
+        template = options.dot.compile(templateSource)
+        templates[templateName] = template
         finished(null, template)
