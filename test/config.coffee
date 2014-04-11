@@ -1,8 +1,6 @@
 rendrDot = (options) ->
-  path = require 'path'
-
   options ?= {}
-  options.basePath ?= path.join __dirname, 'preCompiled'
+  options.basePath ?= __dirname
   options.templatePath ?= 'templates'
 
   require('../lib/rendr-dot')(options)
