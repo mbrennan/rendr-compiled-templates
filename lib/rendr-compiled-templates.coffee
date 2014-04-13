@@ -5,11 +5,13 @@ class CompiledTemplateAdapter
   constructor: (@templates) ->
 
   getTemplate: (templateName) ->
-    console.log "Getting template #{templateName}"
-    throw new Error("Unable to find template name #{templateName} in templates.") \
-      if not templateName of @templates
+    throw new Error("Unable to get template; no template name was supplied") if not templateName
 
-    templates[templateName]
+    console.log "Getting template #{templateName}"
+    if not @templates[templateName]?
+      throw new Error("Unable to find template name #{templateName} in templates.")
+
+    @templates[templateName]
 
 class CompiledClientTemplateAdapter extends CompiledTemplateAdapter
   getLayout: ->
@@ -28,9 +30,9 @@ module.exports = (options) ->
   options ?= Object.new
   options.basePath ?= ''
   options.templateDirectory ?= path.join 'app', 'templates'
-  options.commonTemplates ?= 'common'
-  options.serverTemplates ?= 'server'
-  options.templates ?= Object.new
+  options.commonModule ?= 'common'
+  options.serverModule ?= 'server'
+  options.templates ?= new Object
   options.isServer = not window?
 
   loadTemplatesFrom = (moduleName) ->
@@ -38,9 +40,9 @@ module.exports = (options) ->
     theseTemplates = require modulePath
     options.templates[templateName] = theseTemplates[templateName] for templateName of theseTemplates
 
-  loadTemplatesFrom(options.commonTemplates) if options.commonTemplates
-  loadTemplatesFrom(options.serverTemplates) if options.serverTemplates
+  loadTemplatesFrom(options.commonModule) if options.commonModule
+  loadTemplatesFrom(options.serverModule) if options.serverModule
 
-  if options.isServer then new CompiledServerTemplateAdapter else
-    new CompiledClientTemplateAdapter
+  adapter = if options.isServer then CompiledServerTemplateAdapter else CompiledClientTemplateAdapter
+  new adapter(options.templates)
 

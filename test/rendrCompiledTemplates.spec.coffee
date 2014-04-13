@@ -9,7 +9,7 @@ describe 'rendr-compiled-templates template adapter', ->
   describe 'method getLayout', ->
     describe 'when passed a template name', ->
       it 'should return a compiled template', (done) ->
-        @rendrDot.getLayout 'preCompiledIdentity', null, (error, template) =>
+        @templateAdapter.getLayout 'identity', null, (error, template) =>
           should.not.exist error
           template(@identity).should.be.exactly @identityValue
           done()
