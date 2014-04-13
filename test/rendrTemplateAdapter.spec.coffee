@@ -1,8 +1,9 @@
+path = require 'path'
 should = require 'should'
 
 describe 'rendr template adapter', ->
   beforeEach ->
-    @templateAdapter = require('./test-rendr-dot')()
+    @templateAdapter = require('./test-template-adapter')()
 
   describe 'interface', ->
     describe 'method getTemplate', ->
@@ -13,7 +14,6 @@ describe 'rendr template adapter', ->
     describe 'method getLayout', ->
       describe 'when supplied with valid parameters', ->
         it 'invokes a callback with a function', (done) ->
-          path = require 'path'
           basePath = path.join('spec', 'templateAdapter')
           @templateAdapter.getLayout(
             'preCompiledIdentity',
@@ -33,5 +33,5 @@ describe 'rendr template adapter', ->
 
       describe 'when running on client', ->
         it 'should error', ->
-          @templateAdapter = require('./test-rendr-dot')(isServer: false)
+          @templateAdapter = require('./test-template-adapter')(isServer: false)
           @templateAdapter.getLayout.bind(null).should.throw()

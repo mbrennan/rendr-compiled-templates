@@ -1,14 +1,14 @@
 {
-  "name": "rendr-dot",
+  "name": "rendr-compiled-templates",
   "version": "0.0.1",
-  "description": "doT template adapter for Rendr apps",
-  "main": "lib/rendr-dot.coffee",
+  "description": "Rendr app generic template adapter that works for any compiled templates",
+  "main": "lib/rendr-compiled-templates.coffee",
   "scripts": {
     "test": "mocha --compilers coffee:coffee-script/register test/"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/mbrennan/rendr-dot.git"
+    "url": "https://github.com/mbrennan/rendr-compiled-templates.git"
   },
   "keywords": [
     "rendr",

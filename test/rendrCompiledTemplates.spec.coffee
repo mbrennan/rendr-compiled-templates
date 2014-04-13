@@ -1,18 +1,14 @@
 should  = require 'should'
 
-describe 'rendr-dot template adapter', ->
+describe 'rendr-compiled-templates template adapter', ->
   beforeEach ->
-    dot = require('dot')
-    @rendrDot = require('./test-rendr-dot')()
+    @templateAdapter = require('./test-template-adapter.coffee')()
     @identityValue = 'a template'
     @identity = identity: @identityValue
 
-  afterEach ->
-    @dotCompile.restore()
-
   describe 'method getLayout', ->
     describe 'when passed a template name', ->
-      it 'should return a compiled doT template', (done) ->
+      it 'should return a compiled template', (done) ->
         @rendrDot.getLayout 'preCompiledIdentity', null, (error, template) =>
           should.not.exist error
           template(@identity).should.be.exactly @identityValue
