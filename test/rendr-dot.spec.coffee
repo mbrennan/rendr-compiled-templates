@@ -3,7 +3,7 @@ should  = require 'should'
 describe 'rendr-dot template adapter', ->
   beforeEach ->
     dot = require('dot')
-    @rendrDot = require('./config').rendrDot()
+    @rendrDot = require('./test-rendr-dot')()
     @identityValue = 'a template'
     @identity = identity: @identityValue
 

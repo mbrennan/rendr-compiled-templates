@@ -2,7 +2,7 @@ should = require 'should'
 
 describe 'rendr template adapter', ->
   beforeEach ->
-    @templateAdapter = require('./config').templateAdapter()
+    @templateAdapter = require('./test-rendr-dot')()
 
   describe 'interface', ->
     describe 'method getTemplate', ->
@@ -33,7 +33,5 @@ describe 'rendr template adapter', ->
 
       describe 'when running on client', ->
         it 'should error', ->
-          @templateAdapter = require('./config').templateAdapter(
-            isServer: false
-          )
+          @templateAdapter = require('./test-rendr-dot')(isServer: false)
           @templateAdapter.getLayout.bind(null).should.throw()
