@@ -1,6 +1,6 @@
 module.exports = (options) ->
   options ?= {}
-  options.basePath ?= __dirname
+  options.entryPath ?= __dirname
   options.templateDirectory ?= 'templates'
   options.commonModule = 'common/identity'
   options.serverModule = false

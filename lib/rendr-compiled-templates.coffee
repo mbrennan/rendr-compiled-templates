@@ -27,7 +27,7 @@ class CompiledServerTemplateAdapter extends CompiledTemplateAdapter
 
 module.exports = (options) ->
   options ?= Object.new
-  options.basePath ?= ''
+  options.entryPath ?= process.cwd()
   options.templateDirectory ?= path.join 'app', 'templates'
   options.commonModule ?= 'common'
   options.serverModule ?= 'server'
@@ -35,7 +35,7 @@ module.exports = (options) ->
   options.isServer = not window?
 
   loadTemplatesFrom = (moduleName) ->
-    modulePath = path.join options.basePath, options.templateDirectory, moduleName
+    modulePath = path.join options.entryPath, options.templateDirectory, moduleName
     theseTemplates = require modulePath
     options.templates[templateName] = theseTemplates[templateName] for templateName of theseTemplates
 
