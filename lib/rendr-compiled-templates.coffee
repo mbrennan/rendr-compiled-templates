@@ -7,7 +7,6 @@ class CompiledTemplateAdapter
   getTemplate: (templateName) ->
     throw new Error("Unable to get template; no template name was supplied") if not templateName
 
-    console.log "Getting template #{templateName}"
     if not @templates[templateName]?
       throw new Error("Unable to find template name #{templateName} in templates.")
 
